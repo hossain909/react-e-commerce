@@ -5,10 +5,9 @@ import Shop from './components/Shop/Shop';
 function App() {
   return (
     <div>
-     <Header></Header>
-     <Shop></Shop>
+      <Header></Header>
+      <Shop></Shop>
     </div>
   );
 }
-
 export default App;
