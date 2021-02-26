@@ -1,0 +1,20 @@
+.product {
+  display: flex;
+  border-bottom: 1px solid #999;
+  padding: 5px 0;
+}
+.product img {
+  margin-right: 25px;
+}
+.product-name {
+  color: #201cf5;
+  font-weight: 400;
+}
+.add-to-cart {
+  background-color: #ffc907;
+  border: 1px solid #999;
+  font-size: 18px;
+  padding: 6px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+}
