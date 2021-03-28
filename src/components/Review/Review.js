@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import fakeData from '../../fakeData';
-import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
+import { useHistory } from 'react-router';
+import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
 import Cart from '../Cart/Cart';
 import ReviewItems from '../ReviewItems/ReviewItems';
 
 const Review = () => {
   const [cart,setCart] = useState([])
+  const [orderPlaced, setOrderPlaced] = useState(false)
+  const history = useHistory()
 
-  const handlePlaceOrder = () =>{
-    setCart([])
-    processOrder()
+  const handleProceedCheckout = () =>{
+   history.push("/shipment")
   }
   useEffect(() => {
-    // Cart
     const savedData = getDatabaseCart()
-    const productKey = Object.keys(savedData)
-    const databaseProduct = productKey.map(key => {
-      const product = fakeData.find(item => item.key === key)
-      product.quantity = savedData[key]
-      return product;
+    const productKeys = Object.keys(savedData)
+
+    fetch("https://guarded-everglades-98451.herokuapp.com/productsByKeys",{
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(productKeys)
     })
-    setCart(databaseProduct)
+    .then(res => res.json())
+    .then(data => setCart(data))
+    // const databaseProduct = productKeys.map(key => {
+    //   const product = fakeData.find(item => item.key === key)
+    //   product.quantity = savedData[key]
+    //   return product;
+    // })
+    // setCart(databaseProduct)
   },[])
+
    const removeProduct = (key) =>{
     //  console.log("Remove Clicked",key)
      const newCart = cart.filter(item => item.key !== key)
@@ -40,7 +51,7 @@ const Review = () => {
       <div className="review-cart">
         <Cart 
         cart={cart}>
-          <button className="add-to-cart" onClick={handlePlaceOrder}>Place Order</button>
+          <button className="add-to-cart" onClick={handleProceedCheckout}>Proceed Checkout</button>
         </Cart>
       </div>
     </div>

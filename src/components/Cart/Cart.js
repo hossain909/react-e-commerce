@@ -1,14 +1,12 @@
 import React from 'react';
 
 const Cart = (props) => {
-  // console.log(props)
-  const cart = props.cart
-  // const totalPrice = cart.reduce((total, product) => total + product.price, 0)
+  const cart = props.cart;
   let totalPrice = 0;
   for (let i = 0; i < cart.length; i++) {
     const product = cart[i]
-    // console.log(product)
-    totalPrice += product.price * product.quantity
+    console.log(product.price,product.quantity);
+    totalPrice += product.price * product.quantity || 1;
   }
   let shipping = 0;
   if (totalPrice > 35) {
